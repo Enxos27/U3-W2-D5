@@ -2,15 +2,14 @@ import MyNavBar from "./MyNavBar"
 import { Row } from "react-bootstrap"
 import SearchBar from "./SearchBar"
 import Footer from "./Footer"
-import WelcomeButton from "./WelcomeButton"
-import CityCard from "./CityCard"
+import WelcomeAlert from "./WelcomeAlert"
 import { useState } from "react"
 import SingleCity from "./SingleCity"
 
 function HomePage() {
  const [activeCity, setActiveCity] = useState(null);
 
-  // 2. HANDLER: Questa funzione viene passata a SearchBar e WelcomeButton
+  // Questa funzione viene passata a SearchBar
   const handleCityChange = (city) => {
     setActiveCity(city);
   };
@@ -20,7 +19,7 @@ function HomePage() {
   return (
     <>
     <MyNavBar illuminaLink="Home"></MyNavBar>    
-    <WelcomeButton></WelcomeButton>
+    <WelcomeAlert></WelcomeAlert>
     <SearchBar onCitySelect={handleCityChange}></SearchBar>
     <h3 className="text-center my-4"> 
         {/* Mostra un titolo diverso a seconda dello stato */}
@@ -38,10 +37,11 @@ function HomePage() {
         {/* MOSTRA LE CARD PREDEFINITE (Solo se non c'è una città attiva) */}
         {showDefaultCards  && (
           <>
-            <CityCard city="Roma" />
-            <CityCard city="Milano" />
-            <CityCard city="Napoli" />
-            <CityCard city="Torino" />
+            <SingleCity city="Roma" />
+            <SingleCity city="Milano" />
+            <SingleCity city="Napoli" />
+            <SingleCity city="Torino" />
+            <div className="mb-5 pb-5"></div>
           </>
         )}
     </Row>

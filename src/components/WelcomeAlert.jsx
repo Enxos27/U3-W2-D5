@@ -3,17 +3,13 @@ function WelcomeButton() {
 
   return (
    <Container fluid className='p-0 mb-4'>
-      
-      {/* Usiamo bg-info (azzurro chiaro) e un bordo arrotondato e ombra per un look moderno.
-        Text-light assicura che il testo sia leggibile su bg-info.
-      */}
       <Alert 
         variant="info" 
-        className='text-center shadow-sm rounded-3 p-4' // Aggiunge ombra e padding
+        className='text-center shadow-sm rounded-3 p-4'
       >
         {/* Intestazione principale con icona */}
         <Alert.Heading className='display-5 fw-bold mb-3' style={{ color: "#007bff" }}> 
-           <i class="bi bi-cloud-sun-fill"></i> EpiMeteo
+           <i className="bi bi-cloud-sun-fill"></i> EpiMeteo
         </Alert.Heading>
         
         <p className='fs-5 text-dark'> 

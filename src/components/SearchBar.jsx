@@ -12,7 +12,7 @@ const SearchBar = ({ onCitySelect }) => {
     if (searchInput.trim()) {
       // Chiama la funzione passata dalla HomePage
       onCitySelect(searchInput.trim()); 
-      setSearchInput(''); // Opzionale: pulisce l'input
+      setSearchInput(''); //pulisce l'input
     }
   };
  

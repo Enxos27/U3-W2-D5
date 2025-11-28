@@ -25,7 +25,6 @@ const fetchWeather = () => {
         }
       })
       .then((arrayOfTemperature) => {
-        console.log("aaa", arrayOfTemperature)
         setTemp(arrayOfTemperature);
         setLoading(false)
       })
@@ -48,7 +47,6 @@ const fetchWeather = () => {
     }, [props.city])
         return (
             <>
-    <Col xs={12}>
         {/* 1. MOSTRA CARICAMENTO */}
         {loading && (
             <div className="text-center">
@@ -67,25 +65,27 @@ const fetchWeather = () => {
             <Col xs={6} md={4} lg={3} className="mx-auto mt-4" > 
                 <Card>
                    <Card.Body>
-                       <Card.Title>{props.city}</Card.Title>
+                        <Card.Title className='text-center fs-3'><i className="bi bi-geo-alt-fill me-2"></i> {props.city}</Card.Title>
+                       <hr/>
                        <Card.Text>
                              {/* QUI NON CI SARÀ PIÙ L'ERRORE */}
-                             Temperatura: {temp.list[0].main.temp} °C 
+                             <span className='fw-bold text-center'><i className="bi bi-thermometer-half"></i>Temperatura:</span> {temp.list[0].main.temp} °C 
                             <br />
-                            Descrizione: {temp.list[0].weather[0].description}
+                            <span className='fw-bold text-center'><i className="bi bi-cloud"></i> Meteo:</span> {temp.list[0].weather[0].description}
                        </Card.Text>
-                        <Button
+                         <Container className='text-end'>
+                            <Button
                           className='mt-auto'
                             variant="primary"
                              onClick={() => navigate(`/details/${props.city}`)}
                           >
                             Vai ai dettagli
                           </Button>
+                         </Container>
                     </Card.Body> 
                 </Card>
             </Col>
         )}
-    </Col>
             </>
 
 );

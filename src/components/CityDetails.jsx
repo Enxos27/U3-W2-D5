@@ -1,5 +1,5 @@
 import { useNavigate, useParams } from 'react-router-dom'
-import { Container, Row, Form, Button, Col, Card, Spinner } from "react-bootstrap" 
+import { Container, Row, Form, Button, Col, Card, Spinner, Alert } from "react-bootstrap" 
 import { useState, useEffect} from 'react';
 import MyNavBar from './MyNavBar';
 import Footer from './Footer';
@@ -22,7 +22,6 @@ const CityDetails = () => {
         }
       })
       .then((arrayOfTemperature) => {
-        console.log("aaa", arrayOfTemperature)
         setTemp(arrayOfTemperature);
         setLoading(false)
       })
@@ -44,9 +43,10 @@ const CityDetails = () => {
           ) : (<>
           <MyNavBar></MyNavBar>
 
-<Row className="justify-content-center mt-4">
-         <Col xs={6} md={4} lg={5} key={params.city}  >
-          <Card className='shadow-lg border-primary'>
+           <Row className="justify-content-center mt-4">
+            {/* Sezione Card */}
+            <Col xs={6} md={4} lg={5} key={params.city}  >
+               <Card className='shadow-lg border-primary'>
              <Card.Body>
              <Card.Header className='bg-primary text-white text-center py-2 mb-2'>
                                 <Card.Title className='mb-0 fs-3'>
@@ -58,27 +58,27 @@ const CityDetails = () => {
                             </Card.Text>
                <hr/>
                <Card.Text className='text-center'>
-                        <span className='fw-bold text-center'><i class="bi bi-thermometer-half"></i> Temperatura:</span> {temp.list[0].main.temp} °C 
+                        <span className='fw-bold text-center'><i className="bi bi-thermometer-half"></i> Temperatura:</span> <span style={{whiteSpace: "nowrap"}}> {temp.list[0].main.temp} °C </span>
                         <br />
                         </Card.Text>
-                        <Card.Text className='text-center'>
+                        <div className='text-center'>
                             <Row className='justify-content-between'>
-                            <Col> <span className='fw-bold'><i class="bi bi-thermometer-high"></i>Max</span> {temp.list[0].main.temp_max} °C </Col>
-                            <Col> <span className='fw-bold text-end'><i class="bi bi-thermometer-low"></i>Min</span> {temp.list[0].main.temp_min} °C </Col>
+                            <Col className='mb-3'> <span className='fw-bold'><i className="bi bi-thermometer-high"></i>Max</span> {temp.list[0].main.temp_max} °C </Col>
+                            <Col className='mb-3'> <span className='fw-bold text-end'><i className="bi bi-thermometer-low"></i>Min</span> {temp.list[0].main.temp_min} °C </Col>
                         </Row>
-                        </Card.Text>
+                        </div>
                        
                         <Card.Text> 
-                            <span className='fw-bold'> <i class="bi bi-cloud"></i> Meteo:</span> {temp.list[0].weather[0].description} 
+                            <span className='fw-bold'> <i className="bi bi-cloud"></i> Meteo:</span> {temp.list[0].weather[0].description} 
                             </Card.Text>
                             <Card.Text>
-                                <span className='fw-bold'> <i class="bi bi-droplet"></i> Umidità:</span> {temp.list[0].main.humidity} %
+                                <span className='fw-bold'> <i className="bi bi-droplet"></i> Umidità:</span> {temp.list[0].main.humidity} %
                             </Card.Text>
                          <Card.Text>
-                               <span className='fw-bold'> <i class="bi bi-wind"></i> Vento:</span> {temp.list[0].wind.speed} m/s
+                               <span className='fw-bold'> <i className="bi bi-wind"></i> Vento:</span> {temp.list[0].wind.speed} m/s
                          </Card.Text>
                          <Card.Text>
-                             <span className='fw-bold'><i class="bi bi-arrow-down"></i><i class="bi bi-arrow-down"></i> Pressione:</span> {temp.list[0].main.pressure} hPa
+                             <span className='fw-bold'><i className="bi bi-arrow-down"></i><i className="bi bi-arrow-down"></i> Pressione:</span> {temp.list[0].main.pressure} hPa
                             </Card.Text>
                       <Container className='text-center'>
                         <Button
@@ -94,9 +94,86 @@ const CityDetails = () => {
                       </Container>
                 
             </Card.Body> 
-            </Card>
-          </Col>
+               </Card>
+            </Col>
           </Row>
+          {/* Sezione Alert per giorni successivi */}
+          <Row className='justify-content-center'>
+            <Col xs={6} md={4} lg={3}>
+            {/* Primo Alert (giorno dopo) */}
+            <Alert variant="light" className="text-center mt-4 shadow ">
+              <Alert.Heading><span className='fw-bold '> Previsioni per il:</span> <span style={{whiteSpace: "nowrap"}}>{new Date(temp.list[8].dt * 1000).toLocaleDateString()}</span></Alert.Heading>
+               <Card.Text className='text-center'>
+                        <span className='fw-bold text-center'><i className="bi bi-thermometer-half"></i> Temperatura:</span> <span style={{whiteSpace: "nowrap"}}> {temp.list[8].main.temp} °C </span>
+                        <br />
+                        </Card.Text>
+                <div className='text-center'>
+                            <Row className='justify-content-between'>
+                            <Col className='mb-3'> <span className='fw-bold'><i className="bi bi-thermometer-high"></i>Max</span> {temp.list[8].main.temp_max} °C </Col>
+                            <Col className='mb-3'> <span className='fw-bold text-end'><i className="bi bi-thermometer-low"></i>Min</span> {temp.list[8].main.temp_min} °C </Col>
+                        </Row>
+                        </div>
+                       
+                        <Card.Text> 
+                            <span className='fw-bold'> <i className="bi bi-cloud"></i> Meteo:</span> {temp.list[8].weather[0].description} 
+                            </Card.Text>
+                         <Card.Text>
+                               <span className='fw-bold'> <i className="bi bi-wind"></i> Vento:</span> {temp.list[8].wind.speed} m/s
+                         </Card.Text>
+            </Alert>
+            {/* Fine primo alert */}
+            </Col>
+            <Col xs={6} md={4} lg={3}>
+            {/* Inizio secondo alert 2gg dopo */}
+            <Alert variant="light" className="text-center mt-4 shadow">
+              <Alert.Heading><span className='fw-bold '> Previsioni per il:</span> <span style={{whiteSpace: "nowrap"}}>{new Date(temp.list[16].dt * 1000).toLocaleDateString()}</span></Alert.Heading>
+               <Card.Text className='text-center'>
+                        <span className='fw-bold text-center'><i className="bi bi-thermometer-half"></i> Temperatura:</span> <span style={{whiteSpace: "nowrap"}}> {temp.list[16].main.temp} °C </span>
+                        <br />
+                        </Card.Text>
+                <div className='text-center'>
+                            <Row className='justify-content-between'>
+                            <Col className='mb-3'> <span className='fw-bold'><i className="bi bi-thermometer-high"></i>Max</span> {temp.list[16].main.temp_max} °C </Col>
+                            <Col className='mb-3'> <span className='fw-bold text-end'><i className="bi bi-thermometer-low"></i>Min</span> {temp.list[16].main.temp_min} °C </Col>
+                        </Row>
+                        </div>
+                       
+                        <Card.Text> 
+                            <span className='fw-bold'> <i className="bi bi-cloud"></i> Meteo:</span> {temp.list[16].weather[0].description} 
+                            </Card.Text>
+                         <Card.Text>
+                               <span className='fw-bold'> <i className="bi bi-wind"></i> Vento:</span> {temp.list[16].wind.speed} m/s
+                         </Card.Text>
+            </Alert>
+            {/* Fine secondo alert */}
+            </Col>
+            <Col xs={6} md={4} lg={3}>
+            {/* Inizio terzo alert 3gg dopo */}
+            <Alert variant="light" className="text-center mt-4 shadow">
+              <Alert.Heading><span className='fw-bold '> Previsioni per il:</span> <span style={{whiteSpace: "nowrap"}}>{new Date(temp.list[24].dt * 1000).toLocaleDateString()}</span></Alert.Heading>
+               <Card.Text className='text-center'>
+                        <span className='fw-bold text-center'><i className="bi bi-thermometer-half"></i> Temperatura:</span> <span style={{whiteSpace: "nowrap"}}> {temp.list[24].main.temp} °C </span>
+                        <br />
+                        </Card.Text>
+                <div className='text-center'>
+                            <Row className='justify-content-between'>
+                            <Col className='mb-3'> <span className='fw-bold'><i className="bi bi-thermometer-high"></i>Max</span> {temp.list[24].main.temp_max} °C </Col>
+                            <Col className='mb-3'> <span className='fw-bold text-end'><i className="bi bi-thermometer-low"></i>Min</span> {temp.list[24].main.temp_min} °C </Col>
+                        </Row>
+                        </div>
+                       
+                        <Card.Text> 
+                            <span className='fw-bold'> <i className="bi bi-cloud"></i> Meteo:</span> {temp.list[24].weather[0].description} 
+                            </Card.Text>
+                         <Card.Text>
+                               <span className='fw-bold'> <i className="bi bi-wind"></i> Vento:</span> {temp.list[24].wind.speed} m/s
+                         </Card.Text>
+            </Alert>
+            {/* Fine terzo alert */}
+            </Col>
+            
+          </Row>
+          <div className="mb-5 pb-5"></div>
           <Footer />
           </>
             )}
